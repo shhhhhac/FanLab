@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+
+<link rel="manifest" href="manifest.json">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FanLab</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🌿 FanLab</div>
+
+    <div class="header-actions">
+
+        <div class="header-search">
+            <input
+                type="search"
+                id="headerSearch"
+                placeholder="🔍ライバーを検索"
+                autocomplete="off">
+        </div>
+
+        <button
+            id="menuButton"
+            aria-label="メニュー">
+            ☰
+        </button>
+
+    </div>
+</header>
+
+<!-- =========================
+     ハンバーガーメニュー
+========================= -->
+
+<div id="menuOverlay" class="menu-overlay"></div>
+
+<nav id="sideMenu" class="side-menu">
+
+    <div class="menu-header">
+        <strong>FanLab</strong>
+        <button id="closeMenu">×</button>
+    </div>
+
+    <div class="menu-search">
+        <input
+            type="search"
+            id="menuSearch"
+            placeholder="ライバーを検索"
+            autocomplete="off">
+    </div>
+
+    <button class="menu-item" data-page="homePage">
+        🏠 ホーム
+    </button>
+
+    <button class="menu-item" data-page="schedulePage">
+        📅 配信予約
+    </button>
+
+    <button class="menu-item" data-page="quickPage">
+        ✨ ファンライト早見
+    </button>
+
+    <div class="menu-divider"></div>
+
+    <button class="menu-item">
+        ⚙️ 設定
+        <span class="coming-soon">今後追加</span>
+    </button>
+
+    <button class="menu-item">
+        🔐 ログイン
+        <span class="coming-soon">今後追加</span>
+    </button>
+
+</nav>
+
+<!-- =========================
+     ホーム
+========================= -->
+
+<main id="homePage" class="page">
+
+    <section class="date-card glass">
+
+        <h2 id="today">2026年8月7日</h2>
+
+        <p>
+            今月あと <span id="remainingDays">24</span>日
+        </p>
+
+    </section>
+
+    <section>
+
+        <div class="section-title">
+            <h2>📅 直近の配信予定</h2>
+
+            <button
+                class="small-button"
+                data-page="schedulePage">
+                すべて見る ＞
+            </button>
+        </div>
+
+        <div id="homeScheduleArea">
+
+            <div class="empty-card glass">
+                まだ配信予定がありません
+            </div>
+
+        </div>
+
+    </section>
+
+    <section>
+
+        <div class="section-title">
+
+            <h2>⭐ MYライバー</h2>
+
+            <button
+                class="small-button"
+                id="showAllLivers">
+                すべて見る ＞
+            </button>
+
+        </div>
+
+        <div id="myLiverArea">
+
+            <div class="empty-card glass">
+                MYライバーを登録しましょう
+            </div>
+
+        </div>
+
+    </section>
+
+    <section id="allLiverSection">
+
+        <div class="section-title">
+            <h2>🔎 ライバー一覧</h2>
+        </div>
+
+<div class="sort-area">
+<label for="liverSort">
+    並び順
+</label>
+<select id="liverSort">
+    <option value="kana">
+        五十音順
+    </option>
+    <option value="newest">
+        登録が新しい順
+    </option>
+    <option value="lv1streak">
+        ファンラ1の連続記録が長い順
+    </option>
+</select>
+</div>
+
+<div id="kanaIndex" class="kana-index">
+
+    <button data-kana="あ">あ</button>
+    <button data-kana="か">か</button>
+    <button data-kana="さ">さ</button>
+    <button data-kana="た">た</button>
+    <button data-kana="な">な</button>
+    <button data-kana="は">は</button>
+    <button data-kana="ま">ま</button>
+    <button data-kana="や">や</button>
+    <button data-kana="ら">ら</button>
+    <button data-kana="わ">わ</button>
+
+</div>
+
+        <div id="liverArea">
+
+            <div class="empty-card glass">
+                ライバーが登録されていません
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<!-- =========================
+     配信予約ページ
+========================= -->
+
+<main id="schedulePage" class="page hidden">
+
+    <div class="page-title">
+        <button class="back-page-button" data-page="homePage">←</button>
+        <h1>📅 配信予約</h1>
+    </div>
+
+    <section>
+
+        <div class="schedule-add-card glass">
+
+            <h2>配信を予定に追加</h2>
+
+            <label>ライバー</label>
+
+            <select id="scheduleLiverSelect">
+                <option value="">選択してください</option>
+            </select>
+
+            <label>日時</label>
+
+            <input
+                type="datetime-local"
+                id="scheduleDate">
+
+            <label>メモ</label>
+
+            <input
+                type="text"
+                id="scheduleMemo"
+                placeholder="歌枠・雑談・イベントなど">
+
+            <button
+                class="primary-button"
+                id="saveSchedule">
+                予定を保存
+            </button>
+
+        </div>
+
+    </section>
+
+    <section>
+
+        <div class="section-title">
+            <h2>今後の予定</h2>
+        </div>
+
+        <div id="scheduleList"></div>
+
+    </section>
+
+</main>
+
+<!-- =========================
+     ファンライト早見ページ
+========================= -->
+
+<main id="quickPage" class="page hidden">
+
+    <div class="page-title">
+
+        <button
+            class="back-page-button"
+            data-page="homePage">
+            ←
+        </button>
+
+        <div>
+            <h1>✨ ファンライト早見</h1>
+            <p>FanLabのファンライト条件</p>
+        </div>
+
+    </div>
+
+    <section>
+
+        <div class="quick-level glass">
+
+            <div class="quick-level-title">
+                <span>Lv1</span>
+                <span class="level-badge lv1"></span>
+            </div>
+
+            <div class="condition-card">
+
+                <div class="condition-name">条件A</div>
+
+                <p>💬 50コメント以上</p>
+                <p>⏱ 3時間以上視聴</p>
+                <p>🎁 200pt以上</p>
+
+            </div>
+
+            <div class="condition-card">
+
+                <div class="condition-name">条件B</div>
+
+                <p>💬 25コメント以上</p>
+                <p>⏱ 時間条件なし</p>
+                <p>🎁 3,000pt以上</p>
+
+            </div>
+
+            <div class="or-note">A または B のどちらか達成</div>
+
+        </div>
+
+        <div class="quick-level glass">
+
+            <div class="quick-level-title">
+                <span>Lv2</span>
+                <span class="level-badge lv2"></span>
+            </div>
+
+            <div class="condition-card">
+
+                <div class="condition-name">条件A</div>
+
+                <p>💬 200コメント以上</p>
+                <p>⏱ 10時間以上視聴</p>
+                <p>🎁 1,000pt以上</p>
+
+            </div>
+
+            <div class="condition-card">
+
+                <div class="condition-name">条件B</div>
+
+                <p>💬 100コメント以上</p>
+                <p>⏱ 3時間以上視聴</p>
+                <p>🎁 15,000pt以上</p>
+
+            </div>
+
+            <div class="or-note">A または B のどちらか達成</div>
+
+        </div>
+
+        <div class="quick-level glass">
+
+            <div class="quick-level-title">
+                <span>Lv3</span>
+                <span class="level-badge lv3"></span>
+            </div>
+
+            <div class="condition-card single">
+
+                <p>💬 400コメント以上</p>
+                <p>⏱ 15時間以上視聴</p>
+                <p>🎁 10,000pt以上</p>
+
+            </div>
+
+        </div>
+
+        <div class="quick-level glass">
+
+            <div class="quick-level-title">
+                <span>Lv4</span>
+                <span class="level-badge lv4"></span>
+            </div>
+
+            <div class="condition-card single">
+
+                <p>💬 800コメント以上</p>
+                <p>⏱ 20時間以上視聴</p>
+                <p>🎁 30,000pt以上</p>
+
+            </div>
+
+        </div>
+
+        <div class="quick-level glass">
+
+            <div class="quick-level-title">
+                <span>Lv5</span>
+                <span class="level-badge lv5"></span>
+            </div>
+
+            <div class="condition-card single">
+
+                <p>💬 1,200コメント以上</p>
+                <p>⏱ 30時間以上視聴</p>
+                <p>🎁 90,000pt以上</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<!-- =========================
+     ＋ボタン
+========================= -->
+
+<button id="addButton" class="add-button">＋</button>
+
+<!-- =========================
+     ライバー追加
+========================= -->
+
+<div id="addModal" class="modal">
+
+    <div class="add-card glass">
+
+        <button class="modal-close" id="closeAddModal">×</button>
+
+        <h2>🌿 ライバー追加</h2>
+
+        <label>アイコン</label>
+
+        <input
+            type="file"
+            id="liverIcon"
+            accept="image/*">
+
+<label>名前</label>
+
+<input
+    id="liverName"
+    placeholder="ライバー名">
+
+<label>よみがな</label>
+
+<input
+    id="liverKana"
+    placeholder="よみがな（ひらがな）">
+
+        <label class="checkbox-label">
+
+            <input
+                type="checkbox"
+                id="myLiverCheck">
+
+            ⭐ MYライバーに登録
+
+        </label>
+
+        <hr>
+
+        <label>過去データ</label>
+
+        <div class="radio-area">
+
+            <label>
+                <input
+                    type="radio"
+                    name="historyData"
+                    value="none"
+                    checked>
+                なし
+            </label>
+
+            <label>
+                <input
+                    type="radio"
+                    name="historyData"
+                    value="exist">
+                あり
+            </label>
+
+        </div>
+
+        <div id="pastDataArea" style="display:none;">
+
+            <label>現在最高Lv</label>
+
+            <select id="currentLevel">
+
+                <option value="0">未取得</option>
+                <option value="1">Lv1</option>
+                <option value="2">Lv2</option>
+                <option value="3">Lv3</option>
+                <option value="4">Lv4</option>
+                <option value="5">Lv5</option>
+
+            </select>
+
+            <h3>Lv別記録</h3>
+
+            <div class="level-input">
+                <strong>Lv1</strong>
+                🔥
+                <input id="lv1Streak" type="number" value="0" min="0">
+                ヶ月
+                🏆
+                <input id="lv1Count" type="number" value="0" min="0">
+                回
+            </div>
+
+            <div class="level-input">
+                <strong>Lv2</strong>
+                🔥
+                <input id="lv2Streak" type="number" value="0" min="0">
+                ヶ月
+                🏆
+                <input id="lv2Count" type="number" value="0" min="0">
+                回
+            </div>
+
+            <div class="level-input">
+                <strong>Lv3</strong>
+                🔥
+                <input id="lv3Streak" type="number" value="0" min="0">
+                ヶ月
+                🏆
+                <input id="lv3Count" type="number" value="0" min="0">
+                回
+            </div>
+
+            <div class="level-input">
+                <strong>Lv4</strong>
+                🔥
+                <input id="lv4Streak" type="number" value="0" min="0">
+                ヶ月
+                🏆
+                <input id="lv4Count" type="number" value="0" min="0">
+                回
+            </div>
+
+            <div class="level-input">
+                <strong>Lv5</strong>
+                🔥
+                <input id="lv5Streak" type="number" value="0" min="0">
+                ヶ月
+                🏆
+                <input id="lv5Count" type="number" value="0" min="0">
+                回
+            </div>
+
+        </div>
+
+<button
+    id="saveLiver"
+    class="primary-button">
+    登録する
+</button>
+
+    </div>
+
+</div>
+
+<!-- =========================
+     詳細画面
+========================= -->
+
+<main id="detail" class="page hidden">
+
+    <div class="detail-topbar">
+
+        <button
+            id="backHome"
+            class="back-button">
+            ← ホーム
+        </button>
+
+    </div>
+
+    <div id="detailContent"></div>
+
+</main>
+
+<!-- =========================
+     ファンライト取得演出
+========================= -->
+
+<div id="achievementOverlay" class="achievement-overlay">
+
+    <div id="achievementCard" class="achievement-card">
+
+        <button
+            id="closeAchievement"
+            class="achievement-close">
+            ×
+        </button>
+
+        <div class="achievement-sparkle sparkle-1">✦</div>
+        <div class="achievement-sparkle sparkle-2">✧</div>
+        <div class="achievement-sparkle sparkle-3">✦</div>
+
+        <div id="achievementIcon"
+             class="achievement-icon">
+            🌿
+        </div>
+
+        <div id="achievementName"
+             class="achievement-name">
+            ライバー名
+        </div>
+
+        <div class="achievement-label">
+            FANLIGHT GET
+        </div>
+
+        <div id="achievementLevel"
+             class="achievement-level">
+            Lv1
+        </div>
+
+        <div id="achievementStats"
+             class="achievement-stats">
+            🔥1ヶ月連続　🏆1回目
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+<script>
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js");
+    });
+}
+</script>
+
+<footer class="site-footer">
+    <div class="footer-logo">🌿 FanLab</div>
+    <p>from a fan, for fans.</p>
+    <small>FanLab</small>
+</footer>
+
+</body>
+</html>
